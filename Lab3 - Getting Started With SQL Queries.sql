@@ -22,22 +22,27 @@ where city = 'Dallas';
 -- 5. List	the	names	of	agents	not	in	New	York	and	not	in	Newark -- 
 select name 
 from agents 
-where (city != 'New York') and (city !=  'Newark');
+where (city != 'New York') 
+	and (city !=  'Newark');
 
 -- 6. List	all	data	for	products	not	in	New	York	or	Newark	that	cost	US$1	or	more. --
 select * 
 from products 
-where (city != 'New York') and (city != 'Newark') and (priceusd > 1.00);
+where (city != 'New York') 
+	and (city != 'Newark') 
+	and (priceusd > 1.00);
 
 --7. List	all	data	for	orders	in	January	or	March --
 select * 
 from orders 
-where (mon = 'jan') or (mon = 'mar');
+where (mon = 'jan') 
+	or (mon = 'mar');
 
 -- 8. List	all	data	for	orders	in	February	less	than	US$100. -- 
 select * 
 from orders 
-where (mon = 'feb') and (dollars < 100);
+where (mon = 'feb') 
+	and (dollars < 100);
 -- There is none? --
 
 -- 9. List	all	orders	from	the	customer	whose	cid	is	C001. --
