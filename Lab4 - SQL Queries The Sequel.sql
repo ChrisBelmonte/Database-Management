@@ -35,8 +35,9 @@ select distinct cid, name
 from customers
 where cid in (select cid
 		from orders
-		where pid = 'p01'
-			or pid = 'p07')
+		where pid in ('p01', 'p07')
+		group by cid
+		having count(pid) > 1) 	
 order by cid asc;
 
 -- 5. Get the pids of products ordered by any customers	
@@ -62,15 +63,15 @@ where cid in (select cid
 order by name asc;
 
 -- 7. Find all customers who have the same discount as that of any customers in Dallas or Kyoto.
-select discount
+select name, discount
 from customers
-where discount in (select discount
+where city != 'Dallas'
+and city != 'Kyoto'
+and discount in (select discount
 			from customers
-			where city = 'Dallas'
-			or city = 'Kyoto'
-			)
-group by discount
-having count(discount) >= 2;
+			where city in ('Dallas', 'Kyoto')
+		)
+order by name asc;
 
 
 
