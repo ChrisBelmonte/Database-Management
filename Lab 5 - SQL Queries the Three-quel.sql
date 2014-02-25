@@ -9,7 +9,7 @@ where (a.aid = o.aid)
 
 --2. Get the pids of products ordered through any agent who makes at 
 --least	one order for a	customer in Kyoto
-select o.pid
+select distinct o.pid
 from agents a,
      customers c,
      orders o
@@ -26,10 +26,7 @@ where cid not in (select cid
 
 --4. Get the names of customers	who have never placed an order. Use an outer join.
 select distinct c.name
-from customers c
-left join 
-     orders o
-on c.cid = o.cid
+from customers c left outer join orders o on c.cid = o.cid
 where o.cid is null
 
 --5. Get the names of customers	who placed at least one	order through an agent in their	
@@ -55,3 +52,17 @@ where (a.city = c.city);
 
 --7. Get the name and city of customers who live in the city where the least number of	
 -- products are	made.
+select c.city,
+       c.name,
+       sum(quantity) as "PRODUCTS MADE"
+from products p,
+     customers c,
+     orders o
+where c.city in (select p.city
+	  from products p
+	  group by p.city
+	  order by count(quantity) desc
+	  limit 1)
+group by c.city, c.name
+
+
