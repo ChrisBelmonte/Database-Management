@@ -61,7 +61,7 @@ from products p,
 where c.city in (select p.city
 	  from products p
 	  group by p.city
-	  order by count(quantity) desc
+	  order by sum(quantity) asc
 	  limit 1)
 group by c.city, c.name
 
