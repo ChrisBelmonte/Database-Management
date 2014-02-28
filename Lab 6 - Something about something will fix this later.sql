@@ -1,19 +1,4 @@
 ﻿-- Question 1
--- assuming this means who live in THE city where the most products are made
--- which also happens to be no one.
-select c.city,
-       c.name
-from products p,
-     customers c,
-     orders o
-where c.city in (select p.city
-	  from products p
-	  group by p.city
-	  order by sum(quantity) desc
-	  limit 1)
-group by c.city, c.name;
-
---Question 2
 select c.city,
        c.name
 from products p,
@@ -25,6 +10,21 @@ where c.city in (select p.city
 	  order by count(quantity) desc
 	  limit 1)
 group by c.city, c.name;
+
+
+--Question 2
+select c.city,
+       c.name
+from products p,
+     customers c,
+     orders o
+where c.city in (select p.city
+	  from products p
+	  group by p.city
+	  order by count(quantity) desc
+	  limit 2)
+group by c.city, c.name;
+--nobody lives in Newark
 
 -- Question 3
 select name
@@ -43,7 +43,7 @@ from customers c,
      orders o
 where (c.cid = o.cid)
   and (p.pid = o.pid)
-order by priceusd desc
+order by priceusd desc;
 
 --Question 5
 select coalesce(c.name),
@@ -77,13 +77,6 @@ having o.dollars >= (select priceUSD
      
 
 
-            
 
-
-
-
-
-
-
-
+           
 
