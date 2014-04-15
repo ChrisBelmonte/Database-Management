@@ -158,16 +158,19 @@ select distinct Directors.FirstName, Directors.LastName
 from Directors,
      DirectorFilmography
 where DirectorFilmography.MovieID in (select MovieID
-					from Movies
+					from DirectorFilmography
 					where MovieID in (select MovieID
-							from ActorFilmography
-							where ActorID in (select ActorID
-									  from Actors
-									  where (FirstName = 'Christian')
-									  and (LastName = 'Bale')
+							  from Movies
+							  where MovieID in (select MovieID
+									    from ActorFilmography
+									    where ActorID in (select ActorID
+											      from Actors
+											      where (FirstName = 'Christian')
+										)
 							)
-				      )
+					)
 );
+											   									    
 							
 
 
